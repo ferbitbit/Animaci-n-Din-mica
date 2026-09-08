@@ -1,0 +1,116 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Key Codes</title>
+   
+    <style>
+      body { 
+        text-align: center;
+        background-color:rgb(37, 167, 48);
+      }
+      canvas {
+        background-color: rgb(206, 250, 255);
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="canvas" width="500" height="600"></canvas>
+    <aside>Press A, B, C, D, H.</aside>
+    
+    <script src="keycode.js"></script>
+    <script>
+    window.onload = function () {
+      var canvas = document.getElementById("canvas");
+      var context = canvas.getContext("2d");
+      var x = 30;
+      var y = 100;
+      context.font = '70pt Futura';
+      context.fillStyle = 'red';
+      context.fillText('La Granja!', x, y); //<== para poner texto en el canvas
+
+      var imagen= new Image(); // variable para guardar la imagen
+      imagen.src = "gatitoprogra.jpg"; // fuente de donde toma la imagen
+      var imagendog= new Image(); // variable para guardar la imagen
+      imagendog.src = "Perrito.jpg"; // fuente de donde toma la imagen
+      var imagenbee= new Image(); // variable para guardar la imagen
+      imagenbee.src = "Bee.jpg"; // fuente de donde toma la imagen
+      var imagenhorse= new Image(); // variable para guardar la imagen
+      imagenhorse.src = "Horse.jpg"; // fuente de donde toma la imagen
+      var imagenburro= new Image(); // variable para guardar la imagen
+      imagenburro.src = "Burro.jpg"; // fuente de donde toma la imagen
+      imagen.onload = function(){
+        context.drawImage(imagen, x+18, y+60, 400, 400); //<== para poner imagen en el canvas
+      };
+
+      //context.fillRect(x,y,100,100);
+
+      function onKeyboardEvent (event) {
+        switch (event.keyCode) {
+        case keycode.UP:
+          console.log("up!");
+          context.clearRect(0, 0, innerWidth, innerHeight);
+          y-=5;
+          context.fillRect(x,y,300,300);
+          break;
+        case keycode.DOWN:
+          console.log("down!");
+          context.clearRect(0, 0, innerWidth, innerHeight);
+          y+=5;
+          context.fillRect(x,y,300,300);
+          break;
+        case keycode.LEFT:
+          console.log("left!");
+          context.clearRect(0, 0, innerWidth, innerHeight);
+          x-=5;
+          context.fillRect(x,y,300,300);
+          break;
+        case keycode.RIGHT:
+          console.log("right!");
+          context.clearRect(0, 0, innerWidth, innerHeight);
+          x+=5;
+          context.fillRect(x,y,300,300);
+          break;
+        case keycode.SPACE:
+          console.log("Jump!");
+          break;
+        case keycode.A:
+          console.log("Letra A");
+          context.clearRect(0, 0, innerWidth, innerHeight);
+          context.fillText('A BEE', x+75, y+10);
+          context.drawImage(imagenbee, x+18, y+60, 400, 400); 
+          break;
+        case keycode.B:
+          console.log("Letra B");
+          context.clearRect(0, 0, innerWidth, innerHeight);
+          context.fillText('BURRO', x+50, y+10);
+          context.drawImage(imagenburro, x+18, y+60, 400, 400);
+          break;
+        case keycode.C:
+          console.log("Letra C");
+          context.clearRect(0, 0, innerWidth, innerHeight);
+          context.fillText('CAT', x+120, y+10);
+          context.drawImage(imagen, x+18, y+60, 400, 400); 
+          break;
+        case keycode.D:
+          console.log("Letra D");
+          context.clearRect(0, 0, innerWidth, innerHeight);
+          context.fillText('DOG', x+115, y+10);
+          context.drawImage(imagendog, x+18, y+60, 400, 400);
+          break;
+        case keycode.H:
+          console.log("Letra H");
+          context.clearRect(0, 0, innerWidth, innerHeight);
+          context.fillText('HORSE', x+50, y+10);
+          context.drawImage(imagenhorse, x+18, y+60, 400, 400);
+          break;
+        default:
+          console.log(event.keyCode);
+        }
+      }
+
+      window.addEventListener('keydown', onKeyboardEvent, false);
+    };
+    </script>
+  </body>
+</html>
