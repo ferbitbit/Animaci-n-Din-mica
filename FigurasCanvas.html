@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Galería de figuras</title>
+
+    <style>
+        body {
+            margin: 0;
+            background-color: #fff281;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        h1 {
+            color: rgb(134, 193, 255);
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        canvas {
+            background-color: #ffecff;
+            border: 3px solid #ff9fff;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Galería de figuras</h1>
+
+    <canvas id="galeria" width="800" height="650"></canvas>
+
+    <script>
+
+    const canvas = document.getElementById("galeria");
+    const ctx = canvas.getContext("2d");
+
+
+// ==================================================
+// ESTRELLA - ZONA SUPERIOR IZQUIERDA
+// ==================================================
+
+ctx.beginPath();
+
+ctx.moveTo(220, 70);
+
+ctx.lineTo(240, 125);
+ctx.lineTo(300, 125);
+
+ctx.lineTo(252, 160);
+ctx.lineTo(270, 220);
+
+ctx.lineTo(220, 185);
+
+ctx.lineTo(170, 220);
+ctx.lineTo(188, 160);
+
+ctx.lineTo(140, 125);
+ctx.lineTo(200, 125);
+
+ctx.closePath();
+
+ctx.fillStyle = "#A8F5FF";
+ctx.fill();
+ctx.stroke();
+
+
+// ==================================================
+// LUNA - ZONA SUPERIOR CENTRAL
+// ==================================================
+
+ctx.beginPath();
+ctx.arc(430, 130, 60, 0, Math.PI * 2);
+
+ctx.fillStyle = "#f7d84a";
+ctx.fill();
+ctx.stroke();
+
+
+// Círculo que recorta la luna
+ctx.beginPath();
+ctx.arc(455, 110, 60, 0, Math.PI * 2);
+
+ctx.fillStyle = "#ffecff";
+ctx.fill();
+
+
+// ==================================================
+// CATARINA - ZONA SUPERIOR DERECHA
+// ==================================================
+
+// Cuerpo
+ctx.beginPath();
+ctx.arc(650, 170, 70, 0, Math.PI * 2);
+
+ctx.fillStyle = "#E62929";
+ctx.fill();
+ctx.stroke();
+
+
+// Cabeza
+ctx.beginPath();
+ctx.arc(650, 110, 25, 0, Math.PI * 2);
+
+ctx.fillStyle = "#222222";
+ctx.fill();
+ctx.stroke();
+
+
+// Línea central
+ctx.beginPath();
+ctx.moveTo(650, 100);
+ctx.lineTo(650, 240);
+ctx.stroke();
+
+
+// Mancha izquierda superior
+ctx.beginPath();
+ctx.arc(615, 145, 10, 0, Math.PI * 2);
+
+ctx.fillStyle = "#222222";
+ctx.fill();
+ctx.stroke();
+
+
+// Mancha derecha superior
+ctx.beginPath();
+ctx.arc(685, 145, 10, 0, Math.PI * 2);
+
+ctx.fill();
+ctx.stroke();
+
+
+// Mancha izquierda inferior
+ctx.beginPath();
+ctx.arc(610, 195, 10, 0, Math.PI * 2);
+
+ctx.fill();
+ctx.stroke();
+
+
+// Mancha derecha inferior
+ctx.beginPath();
+ctx.arc(690, 195, 10, 0, Math.PI * 2);
+
+ctx.fill();
+ctx.stroke();
+
+
+// ==================================================
+// HONGO - ZONA INFERIOR IZQUIERDA
+// ==================================================
+
+// TALLO DEL HONGO
+ctx.beginPath();
+
+ctx.moveTo(170, 570);
+ctx.lineTo(175, 495);
+
+ctx.quadraticCurveTo(200, 488, 225, 495);
+
+ctx.lineTo(230, 570);
+
+ctx.closePath();
+
+ctx.fillStyle = "#f2ffe9";
+ctx.fill();
+ctx.stroke();
+
+
+// SOMBRERO DEL HONGO
+ctx.beginPath();
+
+ctx.moveTo(125, 495);
+
+// Curva izquierda
+ctx.quadraticCurveTo(125, 425, 185, 415);
+
+// Parte superior
+ctx.quadraticCurveTo(245, 405, 275, 455);
+
+// Curva derecha
+ctx.quadraticCurveTo(290, 480, 275, 495);
+
+// Base del sombrero
+ctx.lineTo(125, 495);
+
+ctx.closePath();
+
+ctx.fillStyle = "#E62929";
+ctx.fill();
+ctx.stroke();
+
+
+// MANCHAS DEL HONGO
+
+ctx.beginPath();
+ctx.arc(160, 455, 10, 0, Math.PI * 2);
+ctx.fillStyle = "#f2ffe9";
+ctx.fill();
+ctx.stroke();
+
+ctx.beginPath();
+ctx.arc(210, 435, 8, 0, Math.PI * 2);
+ctx.fill();
+ctx.stroke();
+
+ctx.beginPath();
+ctx.arc(250, 465, 11, 0, Math.PI * 2);
+ctx.fill();
+ctx.stroke();
+
+
+// ==================================================
+// CASA - ZONA INFERIOR DERECHA
+// ==================================================
+
+// Cuerpo
+ctx.beginPath();
+ctx.moveTo(500, 400);
+ctx.lineTo(700, 400);
+ctx.lineTo(700, 500);
+ctx.lineTo(500, 500);
+ctx.closePath();
+
+ctx.fillStyle = "#8AC0FF";
+ctx.fill();
+ctx.stroke();
+
+
+// Techo
+ctx.beginPath();
+ctx.moveTo(500, 400);
+ctx.lineTo(600, 320);
+ctx.lineTo(700, 400);
+ctx.closePath();
+
+ctx.fillStyle = "#298CFF";
+ctx.fill();
+ctx.stroke();
+
+
+// Puerta
+ctx.beginPath();
+ctx.moveTo(580, 500);
+ctx.lineTo(580, 450);
+ctx.lineTo(620, 450);
+ctx.lineTo(620, 500);
+ctx.closePath();
+
+ctx.fillStyle = "#C4DDFF";
+ctx.fill();
+ctx.stroke();
+
+
+// Ventana
+ctx.beginPath();
+ctx.moveTo(530, 430);
+ctx.quadraticCurveTo(550, 410, 570, 430);
+ctx.lineTo(570, 460);
+ctx.quadraticCurveTo(550, 480, 530, 460);
+ctx.closePath();
+
+ctx.fillStyle = "#f2ffe9";
+ctx.fill();
+ctx.stroke();
+
+    </script>
+
+</body>
+</html>
