@@ -1,0 +1,153 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Mi Reloj</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background-image: url("Limon.jpg");
+            font-family: "Trebuchet MS", sans-serif;
+            color: #8b6d45;
+            text-align: center;
+        }
+
+        h1 {
+            font-family: "Trebuchet MS", sans-serif;
+            font-size: 32px;
+            color: #8b6d45;
+            margin: 10px 0 20px;
+        }
+
+        canvas {
+            background-color: white;
+            border: 2px solid #ead9a5;
+            display: block;
+            margin: 0 auto;
+            width: 95%;
+            height: 80vh;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Mi Reloj</h1>
+
+    <canvas id="canvas"></canvas>
+
+    <script>
+        var canvas = document.getElementById("canvas");
+        var ctx = canvas.getContext("2d");
+
+        canvas.width = window.innerWidth * 0.95;
+        canvas.height = window.innerHeight * 0.80;
+
+        var x = canvas.width / 2;
+        var y = canvas.height / 2;
+        var radio = Math.min(canvas.width, canvas.height) * 0.36;
+
+        var vr1 = 0.01;
+        var vr2 = 0.05;
+        var vr3 = 0.15;
+
+        var angulo1 = 0;
+        var angulo2 = 0;
+        var angulo3 = 0;
+
+        // Imágenes del reloj y sus manecillas
+        var reloj = new Image();
+        reloj.src = "reloj.jpg";
+
+        var horas = new Image();
+        horas.src = "horas.png";
+
+        var minutos = new Image();
+        minutos.src = "minutos.png";
+
+        var segundos = new Image();
+        segundos.src = "segundos.png";
+
+        function dibujarManecilla(angulo, largo, grosor, color, imagen) {
+            ctx.save();
+            ctx.translate(x, y);
+            ctx.rotate(angulo);
+
+            if (imagen.complete && imagen.naturalWidth > 0) {
+                ctx.drawImage(imagen, -grosor / 2, -largo, grosor, largo);
+            } else {
+                ctx.beginPath();
+                ctx.moveTo(0, 0);
+                ctx.lineTo(0, -largo);
+                ctx.lineWidth = grosor;
+                ctx.strokeStyle = color;
+                ctx.lineCap = "round";
+                ctx.stroke();
+            }
+
+            ctx.restore();
+        }
+
+        function animar() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            if (reloj.complete && reloj.naturalWidth > 0) {
+                ctx.drawImage(reloj, x - radio, y - radio, radio * 2, radio * 2);
+            } else {
+                ctx.beginPath();
+                ctx.arc(x, y, radio, 0, Math.PI * 2);
+                ctx.fillStyle = "#fffdf8";
+                ctx.fill();
+                ctx.lineWidth = 4;
+                ctx.strokeStyle = "#e8d8a7";
+                ctx.stroke();
+
+                ctx.fillStyle = "#8b6d45";
+                ctx.font = "18px Trebuchet MS";
+                ctx.textAlign = "center";
+                ctx.textBaseline = "middle";
+
+                for (var i = 1; i <= 12; i++) {
+                    var angulo = i * Math.PI / 6;
+                    var nx = x + Math.sin(angulo) * radio * 0.83;
+                    var ny = y - Math.cos(angulo) * radio * 0.83;
+                    ctx.fillText(i, nx, ny);
+                }
+            }
+
+            dibujarManecilla(angulo1, radio * 0.45, 6, "#8b6d45", horas);
+            dibujarManecilla(angulo2, radio * 0.65, 4, "#d6a75d", minutos);
+            dibujarManecilla(angulo3, radio * 0.78, 2, "#c87966", segundos);
+
+            ctx.beginPath();
+            ctx.arc(x, y, 6, 0, Math.PI * 2);
+            ctx.fillStyle = "#8b6d45";
+            ctx.fill();
+
+            angulo1 += vr1;
+            angulo2 += vr2;
+            angulo3 += vr3;
+
+            requestAnimationFrame(animar);
+        }
+
+        animar();
+
+        window.addEventListener("resize", function() {
+            canvas.width = window.innerWidth * 0.95;
+            canvas.height = window.innerHeight * 0.80;
+
+            x = canvas.width / 2;
+            y = canvas.height / 2;
+            radio = Math.min(canvas.width, canvas.height) * 0.36;
+        });
+    </script>
+
+</body>
+</html>
+
+
+
