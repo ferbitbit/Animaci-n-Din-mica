@@ -1,0 +1,312 @@
+<!doctype html>
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>My Paint</title>
+
+  <style>
+    body {
+      text-align: center;
+      margin-top: 20px;
+      background-image: url("Estrellas.jpg");
+      background-size: auto;
+      font-family: "Trebuchet MS", sans-serif;
+      color: #b56b91;
+    }
+
+    h1 {
+      color: #bc7a9e;
+      font-size: 35px;
+      margin-bottom: 5px;
+      text-shadow: 2px 3px 5px #f3d5e4;
+    }
+
+    p, aside {
+      color: #bc7a9e;
+      text-shadow: 2px 2px 4px rgba(100, 60, 90, 0.35);
+    }
+
+    /* Botón de borrar y controles del pincel */
+    #otros {
+      margin: 15px auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    #otros button,
+    #grosor button {
+      padding: 12px 18px;
+      background: #e9a9c8;
+      border: 2px solid white;
+      color: white;
+      font-family: "Trebuchet MS", sans-serif;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      margin: 3px;
+      border-radius: 20px;
+      box-shadow: 0 3px 7px #edc5d9;
+      transition: 0.2s;
+      text-shadow: 1px 2px 3px rgba(60, 40, 60, 0.35);
+    }
+
+    #otros button:hover,
+    #grosor button:hover {
+      background: #d88db4;
+      transform: translateY(-2px);
+    }
+
+    #grosor {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 3px;
+    }
+
+    #grosor button {
+      background-color: #f7b8d2;
+      color: #70445b;
+      padding: 12px 15px;
+    }
+
+    #grosor button.selected {
+      background-color: #c879a0;
+      color: white;
+      outline: 2px solid #a95782;
+    }
+
+    /* Distribución del lienzo y las paletas */
+    .paint {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+      margin: 20px auto;
+      width: 98%;
+    }
+
+    .colores {
+      width: 90px;
+      min-width: 90px;
+      padding: 12px 5px;
+      box-sizing: border-box;
+      background: #ffffff;
+      border: 2px solid #f6d5e5;
+      border-radius: 25px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .titulo-color {
+      font-size: 12px;
+      font-weight: bold;
+      color: #c16e96;
+      margin-bottom: 5px;
+    }
+
+    .colores button {
+      width: 35px;
+      height: 35px;
+      min-width: 35px;
+      margin: 3px;
+      border: 3px solid white;
+      outline: 1px solid #f3d5e4;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .colores button:hover {
+      transform: scale(1.15);
+    }
+
+    .colores button.selected {
+      outline: 3px solid #d47ba5;
+      transform: scale(1.12);
+    }
+
+    /* Lienzo */
+    #canvas {
+      background-color: white;
+      border: 4px solid #f4c6dc;
+      border-radius: 20px;
+      box-shadow: 0 5px 15px #e9bfd2;
+      cursor: crosshair;
+      max-width: 75%;
+      height: auto;
+    }
+
+    aside {
+      margin: 15px;
+      font-size: 15px;
+    }
+
+    @media (max-width: 700px) {
+      .paint {
+        gap: 5px;
+      }
+
+      .colores {
+        width: 55px;
+        min-width: 55px;
+        padding: 8px 2px;
+      }
+
+      .colores button {
+        width: 27px;
+        height: 27px;
+        min-width: 27px;
+      }
+
+      #canvas {
+        max-width: 70%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <h1>MyPaint ☆</h1>
+  <p>✿ Draw your little world ✿</p>
+
+  <div id="otros">
+    <button id="clear" type="button">Borrar todo ☑</button>
+
+    <div id="grosor">
+      <button type="button" data-grosor="3">Delgada</button>
+      <button type="button" data-grosor="8" class="selected">Mediana</button>
+      <button type="button" data-grosor="15">Gruesa</button>
+    </div>
+  </div>
+
+  <div class="paint">
+
+    <!-- Paleta de colores pastel -->
+    <div class="colores">
+      <div class="titulo-color">♡ Pastel</div>
+      <button type="button" value="#ffc2d1" style="background:#ffc2d1"></button>
+      <button type="button" value="#cdb4db" style="background:#cdb4db"></button>
+      <button type="button" value="#bde0fe" style="background:#bde0fe"></button>
+      <button type="button" value="#b7e4c7" style="background:#b7e4c7"></button>
+      <button type="button" value="#fdffb6" style="background:#fdffb6"></button>
+      <button type="button" value="#ffd6a5" style="background:#ffd6a5"></button>
+      <button type="button" value="#ffadad" style="background:#ffadad"></button>
+      <button type="button" value="#e9edc9" style="background:#e9edc9"></button>
+    </div>
+
+    <!-- Lienzo -->
+    <canvas id="canvas" width="1000" height="700"></canvas>
+
+    <!-- Paleta de colores normales -->
+    <div class="colores">
+      <div class="titulo-color">♡ Normal</div>
+      <button type="button" value="#000000" style="background:#000000"></button>
+      <button type="button" value="#ffffff" style="background:#ffffff"></button>
+      <button type="button" value="#ff0000" style="background:#ff0000"></button>
+      <button type="button" value="#e75480" style="background:#e75480"></button>
+      <button type="button" value="#a78bfa" style="background:#a78bfa"></button>
+      <button type="button" value="#468faf" style="background:#468faf"></button>
+      <button type="button" value="#40916c" style="background:#40916c"></button>
+      <button type="button" value="#ffb703" style="background:#ffb703"></button>
+      <button type="button" value="#f4a261" style="background:#f4a261"></button>
+      <button type="button" value="#9c6644" style="background:#9c6644"></button>
+    </div>
+
+  </div>
+
+  <aside>✿ Haz clic y arrastra para dibujar ✿</aside>
+
+  <script src="utils2.js"></script>
+
+  <script>
+    window.onload = function () {
+      var canvas = document.getElementById('canvas');
+      var context = canvas.getContext('2d');
+      var mouse = utils.captureMouse(canvas);
+
+      // Configuración inicial del pincel
+      context.lineWidth = 8;
+      context.lineCap = 'round';
+      context.lineJoin = 'round';
+      context.strokeStyle = '#ffc2d1';
+
+      var dibujando = false;
+
+      canvas.addEventListener('mousedown', function () {
+        dibujando = true;
+        context.beginPath();
+        context.moveTo(mouse.x, mouse.y);
+        canvas.addEventListener('mousemove', onMouseMove, false);
+      }, false);
+
+      canvas.addEventListener('mouseup', function () {
+        dibujando = false;
+        canvas.removeEventListener('mousemove', onMouseMove, false);
+      }, false);
+
+      canvas.addEventListener('mouseleave', function () {
+        dibujando = false;
+        canvas.removeEventListener('mousemove', onMouseMove, false);
+      }, false);
+
+      function onMouseMove() {
+        if (dibujando) {
+          context.lineTo(mouse.x, mouse.y);
+          context.stroke();
+        }
+      }
+
+      // Cambiar colores en ambas paletas
+      var paletas = document.querySelectorAll('.colores');
+
+      paletas.forEach(function (paleta) {
+        paleta.addEventListener('click', function (event) {
+          if (event.target.tagName === 'BUTTON' && event.target.value) {
+            context.strokeStyle = event.target.value;
+
+            document.querySelectorAll('.colores button').forEach(function (boton) {
+              boton.classList.remove('selected');
+            });
+
+            event.target.classList.add('selected');
+          }
+        });
+      });
+
+      // Seleccionar el primer color pastel
+      document.querySelector('.colores button').classList.add('selected');
+
+      // Cambiar el grosor del pincel
+      var botonesGrosor = document.querySelectorAll('#grosor button');
+
+      botonesGrosor.forEach(function (boton) {
+        boton.addEventListener('click', function () {
+          context.lineWidth = Number(boton.dataset.grosor);
+
+          botonesGrosor.forEach(function (otroBoton) {
+            otroBoton.classList.remove('selected');
+          });
+
+          boton.classList.add('selected');
+        });
+      });
+
+      // Borrar todo el dibujo
+      var clearButton = document.getElementById('clear');
+
+      clearButton.addEventListener('click', function () {
+        context.clearRect(0, 0, canvas.width, canvas.height);
+      });
+    };
+  </script>
+</body>
+</html>
+
